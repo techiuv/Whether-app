@@ -1,0 +1,215 @@
+:root{
+    --bg:#ffffff18;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: white;
+    font-family: "Poppins", sans-serif;
+}
+
+
+#bg{
+    width: 100vw;
+    height: 100vh;   
+    z-index: -1;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#bg video{
+    object-fit: cover;
+    object-position: center center;
+    height: 100%;
+    width: 100%;
+}
+
+#search-area{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70vw;
+    position: relative;
+    min-height: 10vh;
+    margin: auto;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    
+}
+
+#search-bar{
+    width: 100%;
+    height: 10vh;
+    background: var(--bg);
+    backdrop-filter: blur(10px);
+    border: none;
+    outline: none;
+    margin: auto;
+    display: flex;
+    font-size: 2vw;
+    border-radius: 20vw;
+    padding: 2vh 5vw;
+    color: white;
+    cursor: pointer;
+    
+}
+
+#search-bar::placeholder{
+    color: #d6d6d6;
+}
+
+#search-icon{
+    font-size: 1.8vw;
+    color: white;
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;   
+    font-weight: 500;
+}
+
+#temp-show-area{
+    height: 100%;
+    width: 80%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 5vh 0;
+}
+
+#temp{
+    font-weight: 550;
+    font-size: 10vw;    
+}
+
+#location{
+    font-size: 3vw;    
+}
+
+#aqi{
+    font-size: 1.5vw;
+    backdrop-filter:blur(10px);
+    background: var(--bg);
+    border-radius: 10vw;
+    padding: 1.5vw;
+}
+
+#info{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-top: 3vh;
+    width: 70%;
+    height: auto;
+    grid-template-columns: 35% 35%;
+    grid-gap: 1vw;
+}
+
+.card-info{
+    background: var(--bg);
+    border-radius: 20px;
+    backdrop-filter:blur(10px);
+    padding: 2vw 5vw;
+}
+
+
+.card-info p:first-child{
+    font-size: 2vw;
+    font-weight: 540;
+}
+
+.card-info p:nth-child(2){
+    font-size: 1.5vw;
+    font-weight: 450;
+}
+
+@media screen and (max-width:1000px){
+    #temp{
+        font-size: 6vw;
+    }
+    
+    #temp-show-area{
+        padding: 2vh 0;
+    }
+    
+    #location{
+        font-size: 1.8vw;
+    }
+    
+    #info{
+        margin-top: .5vh;
+    }
+    
+    #search-area{
+        margin-bottom: 1vh;
+    }
+}
+
+@media screen and (max-width:650px){
+    #search-area{
+        min-height: 8vh;
+        width: 80%;        
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+    }
+    
+    #search-bar{
+        height: 8vh;
+        font-size: 4vw;
+        font-weight: 400;
+    }
+    
+    
+    #search-icon{
+        font-size: 4.5vw;
+        right: 8%;
+    }
+    
+    #temp-show-area{
+        margin-top: 5vh;
+        margin-bottom: 5vh;
+    }
+    
+    #temp{
+        font-size: 25vw;
+        font-weight: 500;
+    }
+    
+    #location{
+        font-size: 5vw;
+    }
+    
+    #info{
+        width: 80%;
+        margin-top: 10vh;
+        height: auto;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 2vw;
+    }
+    
+    .card-info{
+        min-height: 8vh;
+        padding: 3vh 5vw ;
+    }
+    
+    .card-info p:first-child{
+        font-size: 4vw;
+    }
+    
+    .card-info p:nth-child(2),
+    #aqi {
+        font-size: 3vw;
+    }
+    
+   #aqi{
+       margin: 2vh 0;
+   }
+}
