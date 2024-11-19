@@ -1,0 +1,11 @@
+body {
+    background: black   ;
+}
+
+.search-no-clear::-webkit-search-cancel-button{
+    display: none;
+}
+
+.search-no-clear::-webkit-search-decoration{
+    display: none;
+}
