@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SeekBar from './Seekbar';
 import SunArc from './SunArc';
-import weatherIcon from '../assets/weather.png;
+// import weatherIcon from '../assets/weather.png;
 
 
 const Dashboard = ({ city }) => {
@@ -72,10 +72,6 @@ const Dashboard = ({ city }) => {
 
 
       
-<div>
-      
-      <img src={weatherIcon} alt="" className="h-[300px] w-[300px]" />
-    </div>
 
       <div className="w-[100%]">
         <p className="text-center text-slate-300 font-normal text-[1rem] p-1">{weather.name}</p>
