@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SeekBar from './Seekbar';
+import SunArc from './SunArc';
+
 
 const Dashboard = ({ city }) => {
   // State to store weather data
@@ -25,7 +27,7 @@ const Dashboard = ({ city }) => {
         // Fetching AQI data based on the latitude and longitude of the city
         const { lat, lon } = weatherData.coord;
         const aqiResponse = await fetch(
-          `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=de359faa955eafd9c96d96368bdb502f`
+          `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${api}`
         );
         if (!aqiResponse.ok) {
           throw new Error('Failed to fetch AQI data');
@@ -60,6 +62,9 @@ const Dashboard = ({ city }) => {
     minutes = minutes < 10 ? '0' + minutes : minutes;
     return `${hours}:${minutes} ${ampm}`;
   };
+
+  // Get current time in UNIX timestamp (for demo purposes, using Date.now())
+  const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds since the UNIX epoch
 
   return (
     <div className="flex items-center justify-center mx-auto h-auto relative flex-col md:flex-row w-[90vw] md:w-[70vw]">
@@ -98,6 +103,15 @@ const Dashboard = ({ city }) => {
 
         {/* Render SeekBar component with the AQI */}
         {aqi && <SeekBar aqi={aqi} />}
+
+{/* Render SunArc component with the sunrise, sunset, and current time */}
+        {weather.sys.sunrise && weather.sys.sunset && (
+          <SunArc
+            sunrise={weather.sys.sunrise}
+            sunset={weather.sys.sunset}
+            currentTime={currentTime}
+          />
+        )}
       </div>
     </div>
   );
