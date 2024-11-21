@@ -7,13 +7,14 @@ const Dashboard = ({ city }) => {
   const [aqi, setAqi] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-//  const api = process.env.VITE_OPEN_WEATHER_API
+  const api = import.meta.env.VITE_OPEN_WEATHER_API
+  
   // Fetch weather and AQI data when the component mounts or city changes
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
         const weatherResponse = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=de359faa955eafd9c96d96368bdb502f&units=metric`
+          `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${api}&units=metric`
         );
         if (!weatherResponse.ok) {
           throw new Error('City not found');
