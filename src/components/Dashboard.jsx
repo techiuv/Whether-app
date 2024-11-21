@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import SeekBar from './seekbar';
+import SeekBar from './Seekbar';
 
 const Dashboard = ({ city }) => {
   // State to store weather data
