@@ -13,13 +13,13 @@ const SunArc = ({ sunrise, sunset, currentTime }) => {
     <div className="flex flex-col items-center mx-auto my-2 p-3 backdrop-blur-md rounded-xl bg-secondary h-auto w-full md:w-3/4">
       <svg width="200" height="100" viewBox="0 0 200 100">
         {/* Horizon line */}
-        <line x1="0" y1="90" x2="200" y2="90" stroke="#f6d94f" strokeWidth="1" />
+        <line x1="0" y1="90" x2="200" y2="90" stroke="#5a99dd" strokeWidth="1" />
 
         {/* Arc path */}
         <path
           d={`M10 90 A90 90 0 0 1 190 90`} // Full arc path
           fill="none"
-          stroke="#f6d94f" // Color for the un-covered part of the arc
+          stroke="#5a99dd" // Color for the un-covered part of the arc
           strokeWidth="2"
           strokeDasharray={totalArcLength} // Total length of the arc
           strokeDashoffset={coveredLength} // Offset the dash to reveal the covered portion
