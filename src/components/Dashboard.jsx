@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SeekBar from './Seekbar';
 import SunArc from './SunArc';
+import LoadingSpinner from './LoadingSpinner';
 // import weatherIcon from '../assets/weather.png;
 
 
@@ -46,7 +47,7 @@ const Dashboard = ({ city }) => {
   }, [city]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
 
   if (error) {
