@@ -1,60 +1,45 @@
-import { useState } from "react";
 import React from 'react';
 
-const SearchBar = ({ setCity }) => {
-    const [loading, setLoading] = useState(false);
-
-    const searchCity = async (e) => {
-        e.preventDefault();
-        const city = e.target.city.value.trim();
-        if (city) {
-            setLoading(true); 
-            try {
-                setCity(city);
-            } finally {
-                setLoading(false); 
-                e.target.city.value = ''; 
-            }
-        }
-    };
-
-    return (
-        <form
-            className="w-[80vw] h-12 md:w-[400px] flex justify-center items-center gap-1 md:gap-2 mx-auto bg-secondary mt-6 backdrop-blur rounded-[100px]"
-            onSubmit={searchCity}
-        >
-            <input
-                type="search"
-                name="city"
-                placeholder="Search city"
-                className="cursor-text w-[80%] h-[100%] px-1 md:px-3 py-1 bg-transparent border-none outline-none focus:outline-none focus:bg-transparent text-white text-sm md:text-lg font-normal placeholder:text-slate-300 backdrop-blur-md search-no-clear"
-                autoComplete="off"
-                aria-label="Search for weather"
-                disabled={loading} 
-            />
-
-            <button
-                className="cursor-pointer bg-transparent hover:shadow-slate-400 transition-all duration-75 rounded-[50%] flex justify-center items-center"
-                aria-label="Search"
-                disabled={loading} 
-            >
-                {loading ? (
-                    <div className="animate-spin h-5 w-5 border-2 border-t-transparent border-white rounded-full"></div>
-                ) : (
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        fill="#fff"
-                        className="text-slate-300 hover:text-white active:text-white"
-                        viewBox="0 0 16 16"
-                    >
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                    </svg>
-                )}
-            </button>
-        </form>
-    );
+// Function to map AQI to color
+const getAqiColor = (aqi) => {
+  if (aqi === 1) return '#00e400'; // Good (0-50)
+  if (aqi === 2) return '#ffff00'; // Moderate (51-100)
+  if (aqi === 3) return '#ff7e00'; // Unhealthy for sensitive groups (101-150)
+  if (aqi === 4) return '#ff0000'; // Unhealthy (151-200)
+  if (aqi === 5) return '#8f3f97'; // Very unhealthy (201-300)
+  return '#7e0023'; // Hazardous (301-500)
 };
 
-export default SearchBar;
+const SeekBar = ({ aqi }) => {
+  const aqiText = [
+    'Good', // 1
+    'Moderate', // 2
+    'Unhealthy for sensitive groups', // 3
+    'Unhealthy', // 4
+    'Very Unhealthy', // 5
+    'Hazardous' // 6
+  ];
+
+  return (
+    <div className="flex flex-col items-center mx-auto my-2 p-3 backdrop-blur-md rounded-xl bg-secondary h-auto w-full md:w-3/4">
+      <p className="text-textSecondary text-[1rem] font-normal text-center mt-1">AQI</p>
+      <p className="text-white text-[1.2rem] font-normal text-center mb-1">
+        {aqiText[aqi - 1]} {/* Display the AQI text based on value */}
+      </p>
+
+      {/* Progress bar container */}
+      <div className="relative w-[70%] h-2 mb-1 rounded-[100px] bg-gray-600">
+        {/* Progress bar filling */}
+        <div
+          className="absolute h-full transition-all duration-200 top-0 left-0 rounded-[100px]"
+          style={{
+            backgroundColor: getAqiColor(aqi),
+            width: `${(aqi / 5) * 100}%`, // Dynamically adjust width based on AQI
+          }}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default SeekBar;
