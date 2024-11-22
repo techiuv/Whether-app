@@ -22,16 +22,16 @@ const SeekBar = ({ aqi }) => {
 
   return (
     <div className="flex flex-col items-center mx-auto my-2 p-3 backdrop-blur-md rounded-xl bg-secondary h-auto w-full md:w-3/4">
-      <p className="text-slate-400 text-[1rem] font-normal text-center m-1">AQI</p>
-      <p className="text-white text-xl font-normal text-center m-1 mb-2">
+      <p className="text-textSecondary text-[1rem] font-normal text-center mt-1">AQI</p>
+      <p className="text-white text-[1.2rem] font-normal text-center mb-1">
         {aqiText[aqi - 1]} {/* Display the AQI text based on value */}
       </p>
 
       {/* Progress bar container */}
-      <div className="relative w-[70%] h-2 mb-1 rounded-xl bg-gray-600">
+      <div className="relative w-[70%] h-2 mb-1 rounded-[100px] bg-gray-600">
         {/* Progress bar filling */}
         <div
-          className="absolute h-full transition-all duration-200 top-0 left-0 rounded-xl"
+          className="absolute h-full transition-all duration-200 top-0 left-0 rounded-[100px]"
           style={{
             backgroundColor: getAqiColor(aqi),
             width: `${(aqi / 5) * 100}%`, // Dynamically adjust width based on AQI
