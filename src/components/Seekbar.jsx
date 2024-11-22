@@ -21,7 +21,7 @@ const SeekBar = ({ aqi }) => {
   ];
 
   return (
-    <div className="flex flex-col items-center mx-auto my-2 p-3 backdrop-blur-md rounded-xl bg-tertiary h-auto w-full md:w-3/4">
+    <div className="flex flex-col items-center mx-auto my-2 p-3 backdrop-blur-md rounded-xl bg-secondary h-auto w-full md:w-3/4">
       <p className="text-slate-400 text-[1rem] font-normal text-center m-1">AQI</p>
       <p className="text-white text-xl font-normal text-center m-1 mb-2">
         {aqiText[aqi - 1]} {/* Display the AQI text based on value */}
