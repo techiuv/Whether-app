@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import SeekBar from './Seekbar';
+import SeekBar from './seekbar';
 import SunArc from './SunArc';
-import LoadingSpinner from './LoadingSpinner';
-// import weatherIcon from '../assets/weather.png;
-
+import WeatherMetrics from './WatherMetrics';
+import SkeletonLoader from './SkeletonLoader';
 
 const Dashboard = ({ city }) => {
   // State to store weather data
@@ -12,7 +11,7 @@ const Dashboard = ({ city }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const api = import.meta.env.VITE_OPEN_WEATHER_API
-  
+
   // Fetch weather and AQI data when the component mounts or city changes
   useEffect(() => {
     const fetchWeatherData = async () => {
@@ -25,7 +24,9 @@ const Dashboard = ({ city }) => {
         }
         const weatherData = await weatherResponse.json();
         setWeather(weatherData);
-        
+
+
+
         // Fetching AQI data based on the latitude and longitude of the city
         const { lat, lon } = weatherData.coord;
         const aqiResponse = await fetch(
@@ -35,7 +36,7 @@ const Dashboard = ({ city }) => {
           throw new Error('Failed to fetch AQI data');
         }
         const aqiData = await aqiResponse.json();
-        setAqi(aqiData.list[0].main.aqi); 
+        setAqi(aqiData.list[0].main.aqi);
         setLoading(false);
       } catch (error) {
         setError(error.message);
@@ -43,76 +44,88 @@ const Dashboard = ({ city }) => {
       }
     };
 
+
+
+
     fetchWeatherData();
   }, [city]);
 
   if (loading) {
-    return <LoadingSpinner />;
+    return <div className="flex items-center justify-center mx-auto h-auto relative flex-col md:flex-row w-[90vw] md:w-[70vw]">
+      <div className="w-[100%]  mx-auto p-10">
+    
+
+        {/* Temperature */}
+        <SkeletonLoader height="10vh" width="30%" className="mx-auto mb-4" />
+
+   
+
+        {/* AQI SeekBar */}
+        <div className="mt-4">
+          <SkeletonLoader height="15vh" width="100%" />
+        </div>
+
+        {/* Weather Metrics */}
+        <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-2 lg:grid-cols-4">
+          <SkeletonLoader height="10vh" width="100%" className="mb-2" />
+          <SkeletonLoader height="10vh" width="100%" className="mb-2" />
+          <SkeletonLoader height="10vh" width="100%" className="mb-2" />
+          <SkeletonLoader height="10vh" width="100%" className="mb-2" />
+        </div>
+
+        {/* SunArc */}
+        <div className="mt-4">
+          <SkeletonLoader height="150px" width="100%" />
+        </div>
+      </div>
+    </div>;
   }
 
   if (error) {
     alert('Please enter a valid city name.');
   }
 
-  const convertTime = (timestamp) => {
-    const date = new Date(timestamp * 1000); // Convert from UNIX timestamp to milliseconds
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
-    let ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12; // Adjust hours to 12-hour format
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-    return `${hours}:${minutes} ${ampm}`;
-  };
 
-  // Get current time in UNIX timestamp (for demo purposes, using Date.now())
+
   const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds since the UNIX epoch
 
   return (
     <div className="flex items-center justify-center mx-auto h-auto relative flex-col md:flex-row w-[90vw] md:w-[70vw]">
 
 
-      
+
 
       <div className="w-[100%]">
-        <p className="text-center text-slate-300 font-normal text-[1rem] p-1">{weather.name}</p>
+        <p className="text-center text-textSecondary font-normal text-[1rem] p-1">{weather.name}</p>
         <h3 className="m-2 md:m-4 text-white font-medium text-3xl md:text-3xl mx-auto text-center">{Math.trunc(weather.main.temp)} °C</h3>
-        <p className="text-center text-slate-300 font-normal text-[1rem] p-1">{weather.weather[0].description}</p>
+        <p className="text-center text-textSecondary font-normal text-[1rem] p-1">{weather.weather[0].description}</p>
 
-        <ul className="flex text-white text-[.8rem] md:text-sm justify-around items-center list-none w-[100%] m-3">
-          <li className="flex justify-center items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-[1rem] w-[1rem] md:h-[1rem] md:w-[1rem]" fill="currentColor" viewBox="0 0 16 16">
-              <path d="M12.5 2A2.5 2.5 0 0 0 10 4.5a.5.5 0 0 1-1 0A3.5 3.5 0 1 1 12.5 8H.5a.5.5 0 0 1 0-1h12a2.5 2.5 0 0 0 0-5m-7 1a1 1 0 0 0-1 1 .5.5 0 0 1-1 0 2 2 0 1 1 2 2h-5a.5.5 0 0 1 0-1h5a1 1 0 0 0 0-2M0 9.5A.5.5 0 0 1 .5 9h10.042a3 3 0 1 1-3 3 .5.5 0 0 1 1 0 2 2 0 1 0 2-2H.5a.5.5 0 0 1-.5-.5" />
-            </svg>
-            {weather.wind.speed} km/hr
-          </li>
-          <li className="flex justify-center items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-[1rem] w-[1rem] md:h-[1rem] md:w-[1rem]" fill="currentColor" viewBox="0 0 16 16">
-              <path d="M12.5 2A2.5 2.5 0 0 0 10 4.5a.5.5 0 0 1-1 0A3.5 3.5 0 1 1 12.5 8H.5a.5.5 0 0 1 0-1h12a2.5 2.5 0 0 0 0-5m-7 1a1 1 0 0 0-1 1 .5.5 0 0 1-1 0 2 2 0 1 1 2 2h-5a.5.5 0 0 1 0-1h5a1 1 0 0 0 0-2M0 9.5A.5.5 0 0 1 .5 9h10.042a3 3 0 1 1-3 3 .5.5 0 0 1 1 0 2 2 0 1 0 2-2H.5a.5.5 0 0 1-.5-.5" />
-            </svg>
-            {weather.main.humidity} %
-          </li>
-          <li className="flex justify-center items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-[1rem] w-[1rem] md:h-[1rem] md:w-[1rem]" fill="currentColor" viewBox="0 0 16 16">
-              <path d="M12.5 2A2.5 2.5 0 0 0 10 4.5a.5.5 0 0 1-1 0A3.5 3.5 0 1 1 12.5 8H.5a.5.5 0 0 1 0-1h12a2.5 2.5 0 0 0 0-5m-7 1a1 1 0 0 0-1 1 .5.5 0 0 1-1 0 2 2 0 1 1 2 2h-5a.5.5 0 0 1 0-1h5a1 1 0 0 0 0-2M0 9.5A.5.5 0 0 1 .5 9h10.042a3 3 0 1 1-3 3 .5.5 0 0 1 1 0 2 2 0 1 0 2-2H.5a.5.5 0 0 1-.5-.5" />
-            </svg>
-            {weather.main.pressure} mb
-          </li>
-        </ul>
-        <p>Sunrise: {convertTime(weather.sys.sunrise)}</p>
-        <p>Sunset: {convertTime(weather.sys.sunset)}</p>
+
+
+
 
         {/* Render SeekBar component with the AQI */}
         {aqi && <SeekBar aqi={aqi} />}
 
-{/* Render SunArc component with the sunrise, sunset, and current time */}
+        <WeatherMetrics
+          humidity={weather.main.humidity}
+          pressure={weather.main.pressure}
+          wind={weather.wind.speed}
+          uv={weather.wind.speed}
+        />
+
+
+        {/* Render SunArc component with the sunrise, sunset, and current time */}
         {weather.sys.sunrise && weather.sys.sunset && (
           <SunArc
             sunrise={weather.sys.sunrise}
             sunset={weather.sys.sunset}
             currentTime={currentTime}
+
           />
         )}
+
+
       </div>
     </div>
   );
