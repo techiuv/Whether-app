@@ -17,17 +17,15 @@ const SunArc = ({ sunrise, sunset, currentTime }) => {
   const sunX = centerX + radius * Math.cos(Math.PI - sunAngle); // Flip angle for SVG direction
   const sunY = centerY - radius * Math.sin(Math.PI - sunAngle); // Adjust for SVG y-axis inversion
 
-
   return (
     <div className="flex flex-col items-center mx-auto my-2 p-3 backdrop-blur-md rounded-xl bg-secondary h-auto w-full md:w-3/4">
-      <svg width="200" height="110" viewBox="0 0 200 100">
-        {/* Horizon line */}
+      <svg width="200" height="100" viewBox="0 0 200 100">
         <line x1="0" y1="90" x2="200" y2="90" stroke="gray" strokeWidth="1" />
 
 
-        {/* Covered arc path */}
+        {/* Arc path */}
         <path
-          d={arcCoveredPath}
+          d={`M10 90 A90 90 0 0 1 190 90`}
           fill="none"
           stroke="gray"
           strokeWidth="1"
