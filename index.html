@@ -1,20 +1,27 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 
-    <meta name="description" content="Weather App" />
-    <meta name="author" content="Yuvraj" />
-    <meta name="keywords" content="weather, app, forecast" />
-  
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 
+  <meta name="description" content="Weather App" />
+  <meta name="author" content="Yuvraj" />
+  <meta name="keywords" content="weather, app, forecast" />
 
-    <title>Weather App</title>
-  </head>
-  <body class="h-screen w-screen bg-gradient-to-b from-[#87c9f4] to-[#5a99dd]">
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+  <style>
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+
+  <title>Weather App</title>
+</head>
+
+<body class="min-h-[100vh] w-screen overflow-scroll bg-gradient-to-b from-[#87c9f4] to-[#5a99dd] pb-3">
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>
