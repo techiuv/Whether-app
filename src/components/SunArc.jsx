@@ -13,7 +13,7 @@ const SunArc = ({ sunrise, sunset, currentTime }) => {
   const coveredLength = (elapsedTime / totalDayDuration) * totalArcLength; // Length of the covered arc
 
   // Dynamically change the stroke color based on the time
-  const coveredArcColor = elapsedTime < totalDayDuration / 2 ? "#f6d94f" : "#fdeea2"; // Example transition: yellow to gold
+  const coveredArcColor = elapsedTime < totalDayDuration / 2 ? "#f6d94f" : "#fdeea2"; 
 
   // Calculate the sun's position
   const sunX = 100 + 90 * Math.cos(Math.PI - angle);
@@ -42,7 +42,7 @@ const SunArc = ({ sunrise, sunset, currentTime }) => {
 
         {/* Covered arc path with dynamic color */}
         <path
-          d={`M${startX} ${startY} A90 90 0 ${elapsedTime / totalDayDuration > 0.5 ? 1 : 0} 1 ${endX} ${endY}`}
+          d={`M10 90 A90 90 0 ${elapsedTime / totalDayDuration > 0.5 ? 1 : 0} 1 ${endX} ${endY}`}
           fill="none"
           stroke={coveredArcColor} // Color for the covered part of the arc
           strokeWidth="2"
