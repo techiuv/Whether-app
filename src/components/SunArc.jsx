@@ -5,60 +5,36 @@ const SunArc = ({ sunrise, sunset, currentTime }) => {
   const totalDayDuration = sunset - sunrise;
   const elapsedTime = currentTime - sunrise;
 
-  // Calculate the angle for the sun's position
-  const angle = (elapsedTime / totalDayDuration) * Math.PI; // Angle in radians (0 to π)
+  // Calculate sun position (angle along the arc)
+  const sunAngle = (elapsedTime / totalDayDuration) * Math.PI; // Angle in radians
 
-  // Calculate the stroke offset based on elapsed time
-  const totalArcLength = 2 * Math.PI * 90; // Arc length (for radius 90)
-  const coveredLength = (elapsedTime / totalDayDuration) * totalArcLength; // Length of the covered arc
+  // Arc radius and center
+  const radius = 90;
+  const centerX = 100;
+  const centerY = 90;
 
-  // Dynamically change the stroke color based on the time
-  const coveredArcColor = elapsedTime < totalDayDuration / 2 ? "#f6d94f" : "#fdeea2"; 
+  // Sun position (x, y) on the arc
+  const sunX = centerX + radius * Math.cos(Math.PI - sunAngle); // Flip angle for SVG direction
+  const sunY = centerY - radius * Math.sin(Math.PI - sunAngle); // Adjust for SVG y-axis inversion
 
-  // Calculate the sun's position
-  const sunX = 100 + 90 * Math.cos(Math.PI - angle);
-  const sunY = 90 - 90 * Math.sin(Math.PI - angle);
-
-  // Calculate the arc's start and end points for the covered portion
-  const startX = 100 + 90 * Math.cos(Math.PI);
-  const startY = 90 - 90 * Math.sin(Math.PI);
-
-  const endX = 100 + 90 * Math.cos(Math.PI - angle);
-  const endY = 90 - 90 * Math.sin(Math.PI - angle);
 
   return (
     <div className="flex flex-col items-center mx-auto my-2 p-3 backdrop-blur-md rounded-xl bg-secondary h-auto w-full md:w-3/4">
-      <svg width="200" height="100" viewBox="0 0 200 100">
+      <svg width="200" height="110" viewBox="0 0 200 100">
         {/* Horizon line */}
-        <line x1="0" y1="90" x2="200" y2="90" stroke="#f6d94f" strokeWidth="1" />
+        <line x1="0" y1="90" x2="200" y2="90" stroke="gray" strokeWidth="1" />
 
-        {/* Arc path (uncovered portion) */}
+
+        {/* Covered arc path */}
         <path
-          d={`M10 90 A90 90 0 0 1 190 90`} // Full arc path
+          d={arcCoveredPath}
           fill="none"
-          stroke="#f6d94f" // Color for the un-covered part of the arc
+          stroke="gray"
           strokeWidth="1"
         />
 
-        {/* Covered arc path with dynamic color */}
-        <path
-          d={`M10 90 A90 90 0 ${elapsedTime / totalDayDuration > 0.5 ? 1 : 0} 1 ${endX} ${endY}`}
-          fill="none"
-          stroke={coveredArcColor} // Color for the covered part of the arc
-          strokeWidth="2"
-          strokeDasharray={totalArcLength} // Total length of the arc
-          strokeDashoffset={coveredLength} // Offset the dash to reveal the covered portion
-        />
-
         {/* Sun circle */}
-        <circle
-          cx={sunX}
-          cy={sunY} 
-          r="5"
-          fill="#fdeea2"
-          stroke="#D7FDF2A9"
-          strokeWidth="3"
-        />
+        <circle cx={sunX} cy={sunY} r="5" fill="#fdeea2" stroke="#D7FDF2A9" strokeWidth="3" />
       </svg>
     </div>
   );
