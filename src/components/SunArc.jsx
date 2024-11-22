@@ -10,7 +10,7 @@ const SunArc = ({ sunrise, sunset, currentTime }) => {
   const coveredLength = (elapsedTime / totalDayDuration) * totalArcLength; // Length of the covered arc
 
   return (
-    <div className="flex flex-col items-center mx-auto my-2 p-3 backdrop-blur-md rounded-xl bg-tertiary h-auto w-full md:w-3/4">
+    <div className="flex flex-col items-center mx-auto my-2 p-3 backdrop-blur-md rounded-xl bg-secondary h-auto w-full md:w-3/4">
       <svg width="200" height="100" viewBox="0 0 200 100">
         {/* Horizon line */}
         <line x1="0" y1="90" x2="200" y2="90" stroke="#f6d94f" strokeWidth="1" />
