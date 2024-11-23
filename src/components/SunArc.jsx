@@ -48,9 +48,9 @@ const SunArc = ({ sunrise, sunset, currentTime }) => {
             <circle
               cx={sunX}
               cy={sunY}
-              r="10"
-              fill="#fdeea2"
-              stroke="#D7FDF2A9"
+              r="8"
+              fill="#FFF6C029"
+              stroke="#fdeea2"
               strokeWidth="2"
             />
           </svg>
