@@ -6,8 +6,8 @@ const getAqiColor = (aqi) => {
   if (aqi === 2) return '#ffff00'; // Moderate (51-100)
   if (aqi === 3) return '#ff7e00'; // Unhealthy for sensitive groups (101-150)
   if (aqi === 4) return '#ff0000'; // Unhealthy (151-200)
-  if (aqi === 5) return '#8f3f97'; // Very unhealthy (201-300)
-  return '#7e0023'; // Hazardous (301-500)
+  if (aqi === 5) return '#ff0000'; // Very unhealthy (201-300)
+  return '#ff0000'; // Hazardous (301-500)
 };
 
 const SeekBar = ({ aqi }) => {
@@ -21,14 +21,14 @@ const SeekBar = ({ aqi }) => {
   ];
 
   return (
-    <div className="flex flex-col items-center mx-auto my-2 p-3 backdrop-blur-md rounded-xl bg-secondary h-auto w-full md:w-3/4">
+    <div className="flex flex-col items-center mx-auto my-2 p-3 backdrop-blur-md rounded-2xl bg-secondary h-auto w-full md:w-3/4">
       <p className="text-textSecondary text-[1rem] font-normal text-center mt-1">AQI</p>
       <p className="text-white text-[1.2rem] font-normal text-center mb-1">
         {aqiText[aqi - 1]} {/* Display the AQI text based on value */}
       </p>
 
       {/* Progress bar container */}
-      <div className="relative w-[70%] h-2 mb-1 rounded-[100px] bg-gray-600">
+      <div className="relative w-[70%] h-2 mb-1 rounded-[100px] bg-[#cce6ff]">
         {/* Progress bar filling */}
         <div
           className="absolute h-full transition-all duration-200 top-0 left-0 rounded-[100px]"
