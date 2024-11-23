@@ -112,5 +112,3 @@ const Dashboard = ({ city }) => {
 };
 
 export default Dashboard;
-
-Fix the code
