@@ -34,7 +34,7 @@ const SeekBar = ({ aqi }) => {
           className="absolute h-full transition-all duration-200 top-0 left-0 rounded-[100px]"
           style={{
             backgroundColor: getAqiColor(aqi),
-            width: `${(aqi / 5) * 100}%`, // Dynamically adjust width based on AQI
+            width: `${(aqi / 6) * 100}%`, // Dynamically adjust width based on AQI
           }}
         />
       </div>
