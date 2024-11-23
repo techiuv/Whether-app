@@ -32,7 +32,7 @@ const SunArc = ({ sunrise, sunset, currentTime }) => {
   };
 
   return (
-    <div className="flex flex-col items-center mx-auto my-2 p-3 backdrop-blur-md rounded-xl bg-secondary h-auto w-full md:w-3/4">
+    <div className="flex flex-col items-center mx-auto my-2 p-3 backdrop-blur-md rounded-2xl bg-secondary h-auto w-full md:w-3/4">
       <div className="relative w-full h-full flex justify-center items-center flex-col gap-1">
         <div className="w-full h-full relative flex justify-center items-center">
           <svg width="200" height="120" viewBox="0 0 200 100">
