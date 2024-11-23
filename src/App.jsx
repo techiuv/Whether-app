@@ -8,6 +8,15 @@ function App() {
 
   // Function to fetch city name based on user's geolocation
   const fetchCityFromGeolocation = async () => {
+    const userConsent = window.confirm(
+      'This app needs your location to provide weather information for your area. Do you want to allow location access?'
+    );
+
+    if (!userConsent) {
+      alert('Location permission denied. Showing default city.');
+      return;
+    }
+
     if (!navigator.geolocation) {
       alert('Geolocation is not supported by this browser.');
       return;
