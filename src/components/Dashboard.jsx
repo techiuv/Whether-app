@@ -91,7 +91,7 @@ const Dashboard = ({ city }) => {
           pressure={weather.main.pressure}
           wind={weather.wind.speed}
           uv={weather.main.uvi} 
-          real_feel={weather.main.feels_like}
+          real_feel={Math.trunc(weather.main.feels_like)}
           visibility={weather.visibility}
         />
 
