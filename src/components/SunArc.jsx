@@ -50,7 +50,7 @@ const SunArc = ({ sunrise, sunset, currentTime }) => {
               cy={sunY}
               r="8"
               fill="#f6c029"
-              stroke="#f6ca3ec5"
+              stroke="#ffdd80c7"
               strokeWidth="2"
             />
           </svg>
