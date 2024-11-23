@@ -92,7 +92,7 @@ const Dashboard = ({ city }) => {
           wind={weather.wind.speed}
           uv={weather.main.uvi} 
           real_feel={weather.main.feels_like}
-          visiblity={weather.visiblity}
+          visibility={weather.visibility}
         />
 
         {weather.sys.sunrise && weather.sys.sunset && (
