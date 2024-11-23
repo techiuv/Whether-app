@@ -31,6 +31,8 @@ const Dashboard = ({ city }) => {
         setWeather(weatherData);
 
         const { lat, lon } = weatherData.coord;
+        
+        // Fetch AQI data
         const aqiResponse = await fetch(
           `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${api}`
         );
@@ -39,30 +41,23 @@ const Dashboard = ({ city }) => {
         }
         const aqiData = await aqiResponse.json();
         setAqi(aqiData.list[0].main.aqi);
+
+        // Fetch UV index data
+        const uvResponse = await fetch(
+          `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${api}&units=metric`
+        );
+        if (!uvResponse.ok) {
+          throw new Error('Failed to fetch UV index data');
+        }
+        const uvData = await uvResponse.json();
+        setUv(uvData.current.uvi);
+        
         setLoading(false);
       } catch (error) {
         setError(error.message);
         setLoading(false);
       }
     };
-
-    
-const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${api}&units=metric`;
-
-async function fetchUVIndex() {
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    const uvIndex = data.current.uvi;
-    setUv(uvIndex)
-    // console.log('UV Index:', uvIndex);
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
-}
-
-fetchUVIndex();
-
 
     fetchWeatherData();
   }, [city, api]);
@@ -109,10 +104,9 @@ fetchUVIndex();
           humidity={weather.main.humidity}
           pressure={weather.main.pressure}
           wind={weather.wind.speed}
-          uv={uv} 
+          uv={uv}
           real_feel={Math.trunc(weather.main.feels_like)}
           visibility={weather.visibility}
-          
         />
 
         {weather.sys.sunrise && weather.sys.sunset && (
