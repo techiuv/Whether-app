@@ -7,6 +7,7 @@ import SkeletonLoader from './SkeletonLoader';
 const Dashboard = ({ city }) => {
   const [weather, setWeather] = useState(null);
   const [aqi, setAqi] = useState(null);
+  const [uv, setUv] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const api = import.meta.env.VITE_OPEN_WEATHER_API;
@@ -44,6 +45,24 @@ const Dashboard = ({ city }) => {
         setLoading(false);
       }
     };
+
+    
+const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${api}&units=metric`;
+
+async function fetchUVIndex() {
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    const uvIndex = data.current.uvi;
+    setUv(uvIndex)
+    // console.log('UV Index:', uvIndex);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}
+
+fetchUVIndex();
+
 
     fetchWeatherData();
   }, [city, api]);
@@ -90,9 +109,10 @@ const Dashboard = ({ city }) => {
           humidity={weather.main.humidity}
           pressure={weather.main.pressure}
           wind={weather.wind.speed}
-          uv={weather.main.uvi} 
+          uv={uv} 
           real_feel={Math.trunc(weather.main.feels_like)}
           visibility={weather.visibility}
+          
         />
 
         {weather.sys.sunrise && weather.sys.sunset && (
