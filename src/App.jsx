@@ -4,7 +4,7 @@ import SearchBar from './components/SearchBar';
 import Dashboard from './components/Dashboard';
 
 function App() {
-  const [city, setCity] = useState('');
+  const [city, setCity] = useState('delhi');
   const [hasPermission, setHasPermission] = useState(false);
 
   // Function to get the cookie value by name
