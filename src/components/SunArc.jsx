@@ -49,7 +49,7 @@ const SunArc = ({ sunrise, sunset, currentTime }) => {
               cx={sunX}
               cy={sunY}
               r="8"
-              fill="#FFF6C029"
+              fill="#f6c029"
               stroke="#fdeea2"
               strokeWidth="2"
             />
