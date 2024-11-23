@@ -90,7 +90,9 @@ const Dashboard = ({ city }) => {
           humidity={weather.main.humidity}
           pressure={weather.main.pressure}
           wind={weather.wind.speed}
-          uv={weather.main.uvi} // Assuming you have a UV index
+          uv={weather.main.uvi} 
+          real_feel={weather.main.feels_like}
+          visiblity={weather.visiblity}
         />
 
         {weather.sys.sunrise && weather.sys.sunset && (
