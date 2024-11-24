@@ -28,7 +28,7 @@ const SeekBar = ({ aqi }) => {
       </p>
 
       {/* Progress bar container */}
-      <div className="relative w-[70%] h-2 mb-1 rounded-[100px] bg-[#cce6ff]">
+      <div className="relative w-[70%] h-2 mb-1 rounded-[100px] bg-[#cce6ff4f]">
         {/* Progress bar filling */}
         <div
           className="absolute h-full transition-all duration-200 top-0 left-0 rounded-[100px]"

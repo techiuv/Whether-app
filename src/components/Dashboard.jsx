@@ -1,8 +1,10 @@
+
 import React, { useState, useEffect } from 'react';
 import SeekBar from './Seekbar';
 import SunArc from './SunArc';
 import WeatherMetrics from './WatherMetrics';
 import SkeletonLoader from './SkeletonLoader';
+
 
 const Dashboard = ({ city }) => {
   const [weather, setWeather] = useState(null);
@@ -16,15 +18,15 @@ const Dashboard = ({ city }) => {
     let gradient = '';
 
     if (currentTime < sunrise) {
-      gradient = 'linear-gradient(45deg, #2e3868, #525c93)'; // Night
+      gradient = 'linear-gradient(45deg, #525c93, #2e3868)'; // Night
     } else if (currentTime >= sunrise && currentTime < sunrise + (sunset - sunrise) / 3) {
       gradient = 'linear-gradient(to bottom, #627294, #9fa7b0, #eeae5f, #c1614e)'; // Morning
     } else if (currentTime >= sunrise + (sunset - sunrise) / 3 && currentTime < sunset - (sunset - sunrise) / 3) {
-      gradient = 'linear-gradient(to bottom, #5a99dd, #87c9f4)'; 
+      gradient = 'linear-gradient(to bottom, #5a99dd, #7bc1f0)';
     } else if (currentTime >= sunset - (sunset - sunrise) / 3 && currentTime < sunset) {
       gradient = 'linear-gradient(to bottom, #385b93, #808cb6)'; // Evening
     } else {
-      gradient = 'linear-gradient(45deg, #2e3868, #525c93)'; // Night
+      gradient = 'linear-gradient(45deg, #525c93, #2e3868)'; // Night
     }
 
     document.body.style.background = gradient;
@@ -75,57 +77,65 @@ const Dashboard = ({ city }) => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center mx-auto h-auto relative flex-col md:flex-row w-[90vw] md:w-[70vw]">
-        <div className="w-[100%] mx-auto p-10">
-          <SkeletonLoader height="10vh" width="30%" className="mx-auto mb-4" />
-          <div className="mt-4">
-            <SkeletonLoader height="15vh" width="100%" />
-          </div>
-          <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-2 lg:grid-cols-4">
-            <SkeletonLoader height="10vh" width="100%" className="mb-2" />
-            <SkeletonLoader height="10vh" width="100%" className="mb-2" />
-            <SkeletonLoader height="10vh" width="100%" className="mb-2" />
-            <SkeletonLoader height="10vh" width="100%" className="mb-2" />
-          </div>
-          <div className="mt-4">
-            <SkeletonLoader height="150px" width="100%" />
-          </div>
-        </div>
+      <div className="flex items-center justify-center mx-auto  flex-col md:flex-row w-screen h-screen fixed top-0 left-0">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border"></div>
+
       </div>
     );
   }
 
   if (error) {
-    return <div className="text-center text-red-500">Error: {error}</div>;
+    alert('city not found');
   }
 
   return (
     <div className="flex items-center justify-center mx-auto h-auto relative flex-col md:flex-row w-[90vw] md:w-[70vw]">
-      <div className="w-[100%]">
-        <p className="text-center text-textSecondary font-normal text-[1rem] p-1">{weather.name}</p>
-        <h3 className="m-2 md:m-4 text-white font-medium text-3xl md:text-3xl mx-auto text-center">
-          {Math.trunc(weather.main.temp)} °C
-        </h3>
-        <p className="text-center text-textSecondary font-normal text-[1rem] p-1">{weather.weather[0].description}</p>
 
-        {aqi && <SeekBar aqi={aqi} />}
-        <WeatherMetrics
-          humidity={weather.main.humidity}
-          pressure={weather.main.pressure}
-          wind={weather.wind.speed}
-          uv={weather.main.uvi}
-          real_feel={Math.trunc(weather.main.feels_like)}
-          visibility={weather.visibility}
-        />
 
-        {weather.sys.sunrise && weather.sys.sunset && (
-          <SunArc
-            sunrise={weather.sys.sunrise}
-            sunset={weather.sys.sunset}
-            currentTime={Math.floor(Date.now() / 1000)}
-          />
-        )}
+      <div className='w-[100%] flex row justify-between mx-auto items-center'>
+        <div className='text-left w-[50%] p-2'>
+          <p className=" text-textSecondary font-normal text-[1rem] p-1  flex justify-start gap-1 md:gap-2 items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className='h-[1rem] w-[1rem]' viewBox="0 0 16 16">
+              <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6" />
+            </svg>
+            {weather.name}
+
+          </p>
+          <h3 className="my-[0px] md:my-[3px] text-white font-medium text-[3rem] md:text-3xl  ">
+            {Math.trunc(weather.main.temp)}°
+          </h3>
+          <p className=" text-textSecondary font-normal  text-[1.2rem] md:text-[3rem] p-1">
+            {weather.weather[0].description}</p>
+
+        </div>
+
+        <div className='w-[50%] p-2'>
+          <img src="/src/assets/weather.png" alt="Weather" className='w-[100%] h-[100%]' />
+        </div>
+
       </div>
+
+
+
+      {aqi && <SeekBar aqi={aqi} />}
+
+
+      <WeatherMetrics
+        humidity={weather.main.humidity}
+        pressure={weather.main.pressure}
+        wind={weather.wind.speed}
+        // uv={weather.main.uvi}
+        // real_feel={Math.trunc(weather.main.feels_like)}
+        visibility={weather.visibility}
+      />
+
+      {weather.sys.sunrise && weather.sys.sunset && (
+        <SunArc
+          sunrise={weather.sys.sunrise}
+          sunset={weather.sys.sunset}
+          currentTime={Math.floor(Date.now() / 1000)}
+        />
+      )}
     </div>
   );
 };
