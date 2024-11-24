@@ -10,7 +10,7 @@ const convertVisibilityToKm = (visibilityInMeters) => {
 
 const WeatherMetrics = ({ humidity, pressure, wind, visibility }) => {
     return (
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 lg:grid-cols-6 w-[100%]">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-4 w-[100%] md:w-3/4">
             {/* Humidity */}
             <div className="rounded-2xl bg-secondary p-4 text-textSecondary">
                 <p className="text-sm font-normal flex  items-center gap-1">
