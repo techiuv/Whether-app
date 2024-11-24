@@ -36,11 +36,11 @@ const SunArc = ({ sunrise, sunset, currentTime }) => {
       <div className="relative w-full h-full flex justify-center items-center flex-col gap-1">
         <div className="w-full h-full relative flex justify-center items-center">
           <svg width="200" height="120" viewBox="0 0 200 100">
-            <line x1="0" y1="90" x2="200" y2="90" stroke="#cce6ff" strokeWidth="1" />
+            <line x1="0" y1="90" x2="200" y2="90" stroke="#ffffff96" strokeWidth="1" />
             <path
               d={`M10 90 A90 90 0 0 1 190 90`}
               fill="none"
-              stroke="#cce6ff"
+              stroke="#ffffff96"
               strokeWidth="1"
             />
 
