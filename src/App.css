@@ -4,6 +4,10 @@ body {
     font-family: "Roboto", sans-serif;
 }
 
+input{
+    background: transparent;
+}
+
 .search-no-clear::-webkit-search-cancel-button{
     display: none;
 }
