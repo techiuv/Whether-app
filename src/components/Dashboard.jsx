@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import SeekBar from './Seekbar';
 import SunArc from './SunArc';
 import WeatherMetrics from './WatherMetrics';
-import SkeletonLoader from './SkeletonLoader';
 
 
 const Dashboard = ({ city }) => {
