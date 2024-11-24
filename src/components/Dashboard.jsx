@@ -11,6 +11,25 @@ const Dashboard = ({ city }) => {
   const [error, setError] = useState(null);
   const api = import.meta.env.VITE_OPEN_WEATHER_API;
 
+  const updateBackground = (sunrise, sunset) => {
+    const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
+    let gradient = '';
+
+    if (currentTime < sunrise) {
+      gradient = 'linear-gradient(45deg, #2e3868, #525c93)'; // Night
+    } else if (currentTime >= sunrise && currentTime < sunrise + (sunset - sunrise) / 3) {
+      gradient = 'linear-gradient(to bottom, #627294, #9fa7b0, #eeae5f, #c1614e)'; // Morning
+    } else if (currentTime >= sunrise + (sunset - sunrise) / 3 && currentTime < sunset - (sunset - sunrise) / 3) {
+      gradient = 'linear-gradient(to bottom, #5a99dd, #87c9f4)'; 
+    } else if (currentTime >= sunset - (sunset - sunrise) / 3 && currentTime < sunset) {
+      gradient = 'linear-gradient(to bottom, #385b93, #808cb6)'; // Evening
+    } else {
+      gradient = 'linear-gradient(45deg, #2e3868, #525c93)'; // Night
+    }
+
+    document.body.style.background = gradient;
+  };
+
   useEffect(() => {
     const fetchWeatherData = async () => {
       if (!city || !api) {
@@ -38,15 +57,18 @@ const Dashboard = ({ city }) => {
         }
         const aqiData = await aqiResponse.json();
         setAqi(aqiData.list[0].main.aqi);
+
+        // Update the background based on sunrise and sunset
+        if (weatherData.sys.sunrise && weatherData.sys.sunset) {
+          updateBackground(weatherData.sys.sunrise, weatherData.sys.sunset);
+        }
+
         setLoading(false);
       } catch (error) {
         setError(error.message);
         setLoading(false);
       }
     };
-
-    
-
 
     fetchWeatherData();
   }, [city]);
@@ -77,8 +99,6 @@ const Dashboard = ({ city }) => {
     return <div className="text-center text-red-500">Error: {error}</div>;
   }
 
-  const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
-
   return (
     <div className="flex items-center justify-center mx-auto h-auto relative flex-col md:flex-row w-[90vw] md:w-[70vw]">
       <div className="w-[100%]">
@@ -93,17 +113,16 @@ const Dashboard = ({ city }) => {
           humidity={weather.main.humidity}
           pressure={weather.main.pressure}
           wind={weather.wind.speed}
-          uv={weather.main.uvi} 
+          uv={weather.main.uvi}
           real_feel={Math.trunc(weather.main.feels_like)}
           visibility={weather.visibility}
-          
         />
 
         {weather.sys.sunrise && weather.sys.sunset && (
           <SunArc
             sunrise={weather.sys.sunrise}
             sunset={weather.sys.sunset}
-            currentTime={currentTime}
+            currentTime={Math.floor(Date.now() / 1000)}
           />
         )}
       </div>
