@@ -13,14 +13,13 @@ const SearchBar = ({ setCity }) => {
     }
 
     return (
-        <form className='w-[80vw] h-12 md:w-[400px] flex justify-center items-center gap-1 md:gap-2 mx-auto bg-secondary mt-6 backdrop-blur rounded-[100px]' onSubmit={searchCity}>
+        <form className='w-[80vw] h-10 md:h-12 md:w-[400px] flex justify-center items-center gap-1 md:gap-2 mx-auto bg-secondary mt-6 backdrop-blur rounded-[100px] ' onSubmit={searchCity}>
             <input
                 type="search"
                 name="city" // Make sure this name matches the one referenced in the form handler
                 placeholder='Search city'
-                className='cursor-text w-[80%] h-[100%] px-1 md:px-3 py-1 bg-transparent border-none outline-none focus:outline-none focus:bg-transparent text-white text-sm md:text-lg font-normal placeholder:text-slate-300 backdrop-blur-md search-no-clear'
+                className='cursor-text w-[80%] h-[100%] px-1 md:px-3 py-1 bg-transparent border-none outline-none focus:outline-none focus:bg-transparent text-white text-sm md:text-lg font-normal placeholder:text-textSecondary  search-no-clear'
                 autoComplete='off'
-                aria-label="Search for weather" 
             />
 
             <button 

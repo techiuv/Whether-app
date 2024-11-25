@@ -1,7 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import SeekBar from './Seekbar';
 import SunArc from './SunArc';
 import WeatherMetrics from './WatherMetrics';
+import SkeletonLoader from './SkeletonLoader';
 
 
 const Dashboard = ({ city }) => {
@@ -47,6 +49,7 @@ const Dashboard = ({ city }) => {
         }
         const weatherData = await weatherResponse.json();
         setWeather(weatherData);
+        console.log(weatherData)
 
         const { lat, lon } = weatherData.coord;
         const aqiResponse = await fetch(
@@ -87,7 +90,7 @@ const Dashboard = ({ city }) => {
   }
 
   return (
-    <div className="flex items-center justify-center mx-auto h-[100%] relative flex-col w-[90vw] md:w-[70vw]">
+    <div className="flex items-center justify-center mx-auto h-auto relative flex-col w-[90vw]  md:w-[70vw]">
 
 
       <div className='w-[100%] md:w-3/4 flex row justify-between mx-auto items-center'>
@@ -102,7 +105,9 @@ const Dashboard = ({ city }) => {
           <h3 className="my-[0px] md:my-[3px] text-white font-medium text-[3rem] md:text-[5rem] ">
             {Math.trunc(weather.main.temp)}°
           </h3>
-          <p className=" text-textSecondary font-normal  text-[1.2rem] md:text-[1.8rem] p-1">
+          <p className='text-white text-sm md:text-lg font-normal'>Feels  like {Math.trunc(weather.main.feels_like
+)}°</p>
+          <p className=" text-textSecondary font-normal  text-sm md:text-lg p-1">
             {weather.weather[0].description}</p>
 
         </div>
