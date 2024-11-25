@@ -87,7 +87,7 @@ const Dashboard = ({ city }) => {
   }
 
   return (
-    <div className="flex items-center justify-center mx-auto h-auto relative flex-col w-[90vw] md:w-[70vw]">
+    <div className="flex items-center justify-center mx-auto h-[100%] relative flex-col w-[90vw] md:w-[70vw]">
 
 
       <div className='w-[100%] md:w-3/4 flex row justify-between mx-auto items-center'>
