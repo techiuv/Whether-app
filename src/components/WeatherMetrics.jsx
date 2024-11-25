@@ -8,7 +8,78 @@ const convertVisibilityToKm = (visibilityInMeters) => {
     return `${Math.trunc(visibilityInMeters / 1000)} km`;
 };
 
-const WeatherMetrics = ({ humidity, pressure, wind, visibility }) => {
+const windDirection = (windAngle) => {
+    // Ensure angle is in the range 0 to 360 degrees
+    windAngle = (windAngle + 360) % 360;
+
+    // Determine the cardinal direction based on the angle
+    let direction = '';
+    let svgIcon = null;
+
+    if (windAngle >= 0 && windAngle < 45) {
+        direction = 'N';
+        svgIcon = (
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" className="h-[1.125rem] w-[1.125rem]" viewBox="0 0 16 16">
+                <path fillRule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5" />
+            </svg>
+        );
+    } else if (windAngle >= 45 && windAngle < 90) {
+        direction = 'NE';
+        svgIcon = (
+            <svg xmlns="http://www.w3.org/2000/svg"  fill="#fff" className="h-[1.125rem] w-[1.125rem]" viewBox="0 0 16 16">
+                <path fillRule="evenodd" d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0z" />
+            </svg>
+        );
+    } else if (windAngle >= 90 && windAngle < 135) {
+        direction = 'E';
+        svgIcon = (
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" className="h-[1.125rem] w-[1.125rem]"  viewBox="0 0 16 16">
+                <path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
+            </svg>
+        );
+    } else if (windAngle >= 135 && windAngle < 180) {
+        direction = 'SE';
+        svgIcon = (
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" className="h-[1.125rem] w-[1.125rem]" viewBox="0 0 16 16">
+                <path fillRule="evenodd" d="M14 13.5a.5.5 0 0 1-.5.5h-6a.5.5 0 0 1 0-1h4.793L2.146 2.854a.5.5 0 1 1 .708-.708L13 12.293V7.5a.5.5 0 0 1 1 0z" />
+            </svg>
+        );
+    } else if (windAngle >= 180 && windAngle < 225) {
+        direction = 'S';
+        svgIcon = (
+            <svg xmlns="http://www.w3.org/2000/svg"  fill="#fff" className="h-[1.125rem] w-[1.125rem]" viewBox="0 0 16 16">
+                <path fillRule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1" />
+            </svg>
+        );
+    } else if (windAngle >= 225 && windAngle < 270) {
+        direction = 'SW';
+        svgIcon = (
+            <svg xmlns="http://www.w3.org/2000/svg"  fill="#fff" className="h-[1.125rem] w-[1.125rem]" viewBox="0 0 16 16">
+                <path fillRule="evenodd" d="M2 13.5a.5.5 0 0 0 .5.5h6a.5.5 0 0 0 0-1H3.707L13.854 2.854a.5.5 0 0 0-.708-.708L3 12.293V7.5a.5.5 0 0 0-1 0z" />
+            </svg>
+        );
+    } else if (windAngle >= 270 && windAngle < 315) {
+        direction = 'W';
+        svgIcon = (
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" className="h-[1.125rem] w-[1.125rem] font-medium" viewBox="0 0 16 16">
+                <path fillRule="evenodd" d="M2 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1H3.707l10.147 10.146a.5.5 0 0 1-.708.708L3 3.707V8.5a.5.5 0 0 1-1 0z" />
+            </svg>
+        );
+    } else if (windAngle >= 315 && windAngle < 360) {
+        direction = 'NW';
+        svgIcon = (
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" className="h-[1.125rem] w-[1.125rem] font-medium" viewBox="0 0 16 16">
+                <path fillRule="evenodd" d="M2 2.5a.5.5 0 0 1 .5.5h6a.5.5 0 0 1 0-1H3.707L13.146 12.854a.5.5 0 1 1-.708.708L3 3.707V7.5a.5.5 0 0 1-1 0z" />
+            </svg>
+        );
+    }
+
+    return { direction, svgIcon };
+};
+
+const WeatherMetrics = ({ humidity, pressure, wind, visibility, windAngle }) => {
+    const { direction, svgIcon } = windDirection(windAngle);
+
     return (
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-4 w-[100%] md:w-3/4">
             {/* Humidity */}
@@ -36,12 +107,11 @@ const WeatherMetrics = ({ humidity, pressure, wind, visibility }) => {
                 <p className="text-sm font-normal flex items-center gap-1">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-[1rem] w-[1rem] md:h-[1rem] md:w-[1rem]" fill="currentColor" viewBox="0 0 16 16">
                         <path d="M12.5 2A2.5 2.5 0 0 0 10 4.5a.5.5 0 0 1-1 0A3.5 3.5 0 1 1 12.5 8H.5a.5.5 0 0 1 0-1h12a2.5 2.5 0 0 0 0-5m-7 1a1 1 0 0 0-1 1 .5.5 0 0 1-1 0 2 2 0 1 1 2 2h-5a.5.5 0 0 1 0-1h5a1 1 0 0 0 0-2M0 9.5A.5.5 0 0 1 .5 9h10.042a3 3 0 1 1-3 3 .5.5 0 0 1 1 0 2 2 0 1 0 2-2H.5a.5.5 0 0 1-.5-.5" />
-                    </svg>Wind Speed
+                    </svg>
+                    Wind Speed
                 </p>
-                <p className="text-lg text-white font-medium">{wind} km/h</p>
+                <p className="text-lg text-white flex justify-start items-center gap-1 font-medium">{svgIcon} {wind} km/h</p>
             </div>
-
-
 
             {/* Visibility */}
             <div className="rounded-2xl bg-secondary p-4 text-textSecondary">

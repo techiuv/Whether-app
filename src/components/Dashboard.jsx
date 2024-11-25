@@ -1,9 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
 import SeekBar from './Seekbar';
 import SunArc from './SunArc';
 import WeatherMetrics from './WeatherMetrics';
-
 
 const Dashboard = ({ city }) => {
   const [weather, setWeather] = useState(null);
@@ -17,7 +15,7 @@ const Dashboard = ({ city }) => {
     let gradient = '';
 
     if (currentTime < sunrise) {
-      gradient = 'linear-gradient(45deg, #525c93, #2e3868)'; // Night
+      gradient = 'linear-gradient(315deg, #525c93, #2e3868)'; // Night
     } else if (currentTime >= sunrise && currentTime < sunrise + (sunset - sunrise) / 3) {
       gradient = 'linear-gradient(to bottom, #627294, #9fa7b0, #eeae5f, #c1614e)'; // Morning
     } else if (currentTime >= sunrise + (sunset - sunrise) / 3 && currentTime < sunset - (sunset - sunrise) / 3) {
@@ -25,10 +23,22 @@ const Dashboard = ({ city }) => {
     } else if (currentTime >= sunset - (sunset - sunrise) / 3 && currentTime < sunset) {
       gradient = 'linear-gradient(to bottom, #385b93, #808cb6)'; // Evening
     } else {
-      gradient = 'linear-gradient(45deg, #525c93, #2e3868)'; // Night
+      gradient = 'linear-gradient(315sdeg, #525c93, #2e3868)'; // Night
     }
 
     document.body.style.background = gradient;
+  };
+
+  const getWeatherImage = (sunrise, sunset) => {
+    const currentTime = Math.floor(Date.now() / 1000);
+
+    if (currentTime < sunrise || currentTime >= sunset) {
+      return '/src/assets/moon.svg'; // Night (moon)
+    } else if (currentTime >= sunrise && currentTime < sunrise + (sunset - sunrise) / 3) {
+      return '/src/assets/sun.svg'; // Morning
+    } else {
+      return '/src/assets/sun.svg'; // Day
+    }
   };
 
   useEffect(() => {
@@ -48,7 +58,6 @@ const Dashboard = ({ city }) => {
         }
         const weatherData = await weatherResponse.json();
         setWeather(weatherData);
-        console.log(weatherData)
 
         const { lat, lon } = weatherData.coord;
         const aqiResponse = await fetch(
@@ -94,7 +103,7 @@ const Dashboard = ({ city }) => {
 
       <div className='w-[100%] md:w-3/4 flex row justify-between mx-auto items-center'>
         <div className='text-left w-[50%] p-2'>
-          <p className=" text-textSecondary font-normal text-[1rem] p-1  flex justify-start gap-1 md:gap-2 items-center">
+          <p className=" text-textSecondary font-normal text-[1rem] py-1  flex justify-start gap-0  items-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className='h-[1rem] w-[1rem]' viewBox="0 0 16 16">
               <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6" />
             </svg>
@@ -105,14 +114,15 @@ const Dashboard = ({ city }) => {
             {Math.trunc(weather.main.temp)}°
           </h3>
           <p className='text-white text-[1rem] md:text-lg font-normal'>Feels  like {Math.trunc(weather.main.feels_like
-)}°</p>
+          )}°</p>
           <p className=" text-textSecondary font-normal  text-[1rem] md:text-lg py-1">
             {weather.weather[0].description}</p>
 
         </div>
 
         <div className='w-[50%]  p-2'>
-          <img src="/src/assets/weather.png" alt="Weather" className='w-[100%] h-[100%] md:w-[300px]' />
+        <img src={getWeatherImage(weather.sys.sunrise, weather.sys.sunset)} alt="Weather" className='w-[100%] h-[100%] md:w-[300px]' />
+
         </div>
 
       </div>
@@ -127,6 +137,7 @@ const Dashboard = ({ city }) => {
         pressure={weather.main.pressure}
         wind={weather.wind.speed}
         visibility={weather.visibility}
+        windAngle={weather.wind.deg}
       />
 
       {weather.sys.sunrise && weather.sys.sunset && (
