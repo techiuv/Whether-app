@@ -104,7 +104,7 @@ const Dashboard = ({ city }) => {
       <div className='w-[100%] md:w-3/4 flex row justify-between mx-auto items-center'>
         <div className='text-left w-[50%] p-2'>
           <p className=" text-textSecondary font-normal text-[1rem] py-1  flex justify-start gap-0  items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className='h-[1rem] w-[1rem]' viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className='h-[.85rem] w-[.85rem]' viewBox="0 0 16 16">
               <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6" />
             </svg>
             {weather.name}
