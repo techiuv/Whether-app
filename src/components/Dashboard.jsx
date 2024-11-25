@@ -14,20 +14,28 @@ const Dashboard = ({ city }) => {
     const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
     let gradient = '';
 
-    if (currentTime < sunrise) {
-      gradient = 'linear-gradient(315deg, #525c93, #2e3868)'; // Night
-    } else if (currentTime >= sunrise && currentTime < sunrise + (sunset - sunrise) / 3) {
-      gradient = 'linear-gradient(to bottom, #627294, #9fa7b0, #eeae5f, #c1614e)'; // Morning
-    } else if (currentTime >= sunrise + (sunset - sunrise) / 3 && currentTime < sunset - (sunset - sunrise) / 3) {
-      gradient = 'linear-gradient(to bottom, #5a99dd, #7bc1f0)';
-    } else if (currentTime >= sunset - (sunset - sunrise) / 3 && currentTime < sunset) {
-      gradient = 'linear-gradient(to bottom, #385b93, #808cb6)'; // Evening
-    } else {
-      gradient = 'linear-gradient(315sdeg, #525c93, #2e3868)'; // Night
+    // Calculate time ranges
+    const dayDuration = sunset - sunrise; 
+    const morningEnd = sunrise + dayDuration / 4; // Morning ends at 1/4th of the day
+    const afternoonStart = morningEnd;
+    const eveningStart = sunset - dayDuration / 4; // Evening starts at 3/4th of the day
+
+    if (currentTime < sunrise || currentTime >= sunset) {
+        // Night
+        gradient = 'linear-gradient(315deg, #1a2238, #0d1117)';
+    } else if (currentTime >= sunrise && currentTime < morningEnd) {
+        // Morning
+        gradient = 'linear-gradient(to bottom, #f7d794, #f6a5c0, #ff6b6b)';
+    } else if (currentTime >= afternoonStart && currentTime < eveningStart) {
+        // Afternoon
+        gradient = 'linear-gradient(to bottom, #5cdb95, #8ee4af)';
+    } else if (currentTime >= eveningStart && currentTime < sunset) {
+        // Evening
+        gradient = 'linear-gradient(to bottom, #2e86de, #3498db, #e17055)';
     }
 
     document.body.style.background = gradient;
-  };
+};
 
   const getWeatherImage = (sunrise, sunset) => {
     const currentTime = Math.floor(Date.now() / 1000);
