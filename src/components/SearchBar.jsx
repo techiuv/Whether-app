@@ -13,7 +13,7 @@ const SearchBar = ({ setCity }) => {
     }
 
     return (
-        <form className='w-[80vw] h-10 md:h-12 md:w-[400px] flex justify-center items-center gap-1 md:gap-2 mx-auto bg-secondary mt-6 backdrop-blur rounded-[100px] ' onSubmit={searchCity}>
+        <form className='w-[80vw] h-12  md:w-[400px] flex justify-center items-center gap-1 md:gap-2 mx-auto bg-secondary mt-6 backdrop-blur rounded-[100px] ' onSubmit={searchCity}>
             <input
                 type="search"
                 name="city" // Make sure this name matches the one referenced in the form handler

@@ -104,9 +104,9 @@ const Dashboard = ({ city }) => {
           <h3 className="my-[0px] md:my-[3px] text-white font-medium text-[3rem] md:text-[5rem] ">
             {Math.trunc(weather.main.temp)}°
           </h3>
-          <p className='text-white text-sm md:text-lg font-normal'>Feels  like {Math.trunc(weather.main.feels_like
+          <p className='text-white text-[1rem] md:text-lg font-normal'>Feels  like {Math.trunc(weather.main.feels_like
 )}°</p>
-          <p className=" text-textSecondary font-normal  text-sm md:text-lg p-1">
+          <p className=" text-textSecondary font-normal  text-[1rem] md:text-lg py-1">
             {weather.weather[0].description}</p>
 
         </div>
