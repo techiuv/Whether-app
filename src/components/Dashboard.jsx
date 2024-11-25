@@ -22,16 +22,16 @@ const Dashboard = ({ city }) => {
 
     if (currentTime < sunrise || currentTime >= sunset) {
         // Night
-        gradient = 'linear-gradient(315deg, #1a2238, #0d1117)';
+        gradient = 'linear-gradient(315deg, #525c93, #2e3868)';
     } else if (currentTime >= sunrise && currentTime < morningEnd) {
         // Morning
-        gradient = 'linear-gradient(to bottom, #f7d794, #f6a5c0, #ff6b6b)';
+        gradient = 'linear-gradient(to bottom, #627294, #9fa7b0, #eeae5f, #c1614e)';
     } else if (currentTime >= afternoonStart && currentTime < eveningStart) {
         // Afternoon
-        gradient = 'linear-gradient(to bottom, #5cdb95, #8ee4af)';
+        gradient = 'linear-gradient(to bottom, #5a99dd, #7bc1f0)';
     } else if (currentTime >= eveningStart && currentTime < sunset) {
         // Evening
-        gradient = 'linear-gradient(to bottom, #2e86de, #3498db, #e17055)';
+        gradient = 'linear-gradient(to bottom, #385b93, #808cb6)';
     }
 
     document.body.style.background = gradient;
