@@ -14,7 +14,7 @@ const SeekBar = ({ aqi }) => {
   const aqiText = [
     'Good', // 1
     'Moderate', // 2
-    'Unhealthy for sensitive groups', // 3
+    'Poor', // 3
     'Unhealthy', // 4
     'Very Unhealthy', // 5
     'Hazardous' // 6
