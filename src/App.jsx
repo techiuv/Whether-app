@@ -18,7 +18,7 @@ function App() {
   // Function to set a cookie
   const setCookie = (name, value, days) => {
     const d = new Date();
-    d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000)); // Set expiration date
+    d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000)); 
     const expires = `expires=${d.toUTCString()}`;
     document.cookie = `${name}=${value}; ${expires}; path=/`;
   };
@@ -30,8 +30,8 @@ function App() {
     );
 
     if (!userConsent) {
-      alert('Location permission denied. Showing default city: Jamui.');
-      setCity('Jamui');
+      alert('Location permission denied. Showing default city.');
+      setCity('delhi');
       return;
     }
 
@@ -54,8 +54,8 @@ function App() {
             if (data.length > 0) {
               const detectedCity = data[0].name;
               setCity(detectedCity);
-              setCookie('city', detectedCity, 30); // Save detected city in cookies for 30 days
-              setCookie('permission', 'granted', 365); // Save permission as granted for 1 year
+              setCookie('city', detectedCity, 30);
+              setCookie('permission', 'granted', 365); 
             } else {
               alert('Could not determine the city from your location.');
             }
@@ -88,8 +88,8 @@ function App() {
     if (savedPermission === 'granted') {
       setHasPermission(true);
     }
-  }, []); // Run this effect once on component mount
-
+  }, []); 
+  
   return (
     <>
       <SearchBar setCity={setCity} />
