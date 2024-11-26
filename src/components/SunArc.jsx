@@ -1,7 +1,6 @@
 import React from "react";
 
 const SunArc = ({ sunrise, sunset, currentTime }) => {
-  // Convert times (in seconds) to a normalized 0-1 scale based on the day duration
   const totalDayDuration = sunset - sunrise;
   const elapsedTime = currentTime - sunrise;
 
@@ -9,7 +8,7 @@ const SunArc = ({ sunrise, sunset, currentTime }) => {
   const normalizedElapsedTime = Math.max(0, Math.min(elapsedTime, totalDayDuration));
 
   // Calculate sun position (angle along the arc)
-  const sunAngle = (normalizedElapsedTime / totalDayDuration) * Math.PI; // Angle in radians
+  const sunAngle = (normalizedElapsedTime / totalDayDuration) * Math.PI;
 
   // Arc radius and center
   const radius = 90;
@@ -17,19 +16,19 @@ const SunArc = ({ sunrise, sunset, currentTime }) => {
   const centerY = 90;
 
   // Sun position (x, y) on the arc
-  const sunX = centerX + radius * Math.cos(Math.PI - sunAngle); // Flip angle for SVG direction
-  const sunY = centerY - radius * Math.sin(Math.PI - sunAngle); // Adjust for SVG y-axis inversion
+  const sunX = centerX + radius * Math.cos(Math.PI - sunAngle);
+  const sunY = centerY - radius * Math.sin(Math.PI - sunAngle);
 
   const convertTime = (timestamp) => {
-    const date = new Date(timestamp * 1000); // Convert from UNIX timestamp to milliseconds
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
-    let ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12; // Adjust hours to 12-hour format
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-    return `${hours}:${minutes} ${ampm}`;
+    const date = new Date(timestamp * 1000);
+    const options = {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    };
+    return date.toLocaleTimeString('en-US', options);
   };
+
 
   return (
     <div className="flex flex-col items-center mx-auto my-2 p-3 backdrop-blur-md rounded-2xl bg-secondary h-auto w-full md:w-3/4">

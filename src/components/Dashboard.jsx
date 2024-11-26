@@ -14,28 +14,20 @@ const Dashboard = ({ city }) => {
     const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
     let gradient = '';
 
-    // Calculate time ranges
-    const dayDuration = sunset - sunrise; 
-    const morningEnd = sunrise + dayDuration / 4; // Morning ends at 1/4th of the day
-    const afternoonStart = morningEnd;
-    const eveningStart = sunset - dayDuration / 4; // Evening starts at 3/4th of the day
-
-    if (currentTime < sunrise || currentTime >= sunset) {
-        // Night
-        gradient = 'linear-gradient(315deg, #525c93, #2e3868)';
-    } else if (currentTime >= sunrise && currentTime < morningEnd) {
-        // Morning
-        gradient = 'linear-gradient(to bottom, #627294, #9fa7b0, #eeae5f, #c1614e)';
-    } else if (currentTime >= afternoonStart && currentTime < eveningStart) {
-        // Afternoon
-        gradient = 'linear-gradient(to bottom, #5a99dd, #7bc1f0)';
-    } else if (currentTime >= eveningStart && currentTime < sunset) {
-        // Evening
-        gradient = 'linear-gradient(to bottom, #385b93, #808cb6)';
+    if (currentTime < sunrise) {
+      gradient = 'linear-gradient(315deg, #525c93, #2e3868)'; // Night
+    } else if (currentTime >= sunrise && currentTime < sunrise + (sunset - sunrise) / 3) {
+      gradient = 'linear-gradient(to bottom, #627294, #9fa7b0, #eeae5f, #c1614e)'; // Morning
+    } else if (currentTime >= sunrise + (sunset - sunrise) / 3 && currentTime < sunset - (sunset - sunrise) / 3) {
+      gradient = 'linear-gradient(to bottom, #5a99dd, #7bc1f0)';
+    } else if (currentTime >= sunset - (sunset - sunrise) / 3 && currentTime < sunset) {
+      gradient = 'linear-gradient(to bottom, #385b93, #808cb6)'; // Evening
+    } else {
+      gradient = 'linear-gradient(315sdeg, #525c93, #2e3868)'; // Night
     }
 
     document.body.style.background = gradient;
-};
+  };
 
   const getWeatherImage = (sunrise, sunset) => {
     const currentTime = Math.floor(Date.now() / 1000);
@@ -67,6 +59,7 @@ const Dashboard = ({ city }) => {
         const weatherData = await weatherResponse.json();
         setWeather(weatherData);
 
+
         const { lat, lon } = weatherData.coord;
         const aqiResponse = await fetch(
           `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${api}`
@@ -87,6 +80,8 @@ const Dashboard = ({ city }) => {
         setError(error.message);
         setLoading(false);
       }
+
+
     };
 
     fetchWeatherData();
@@ -103,33 +98,36 @@ const Dashboard = ({ city }) => {
 
   if (error) {
     alert('city not found');
+    setLoading(false)
   }
 
   return (
-    <div className="flex items-center justify-center mx-auto h-auto relative flex-col w-[90vw]  md:w-[70vw]">
+    <div className="flex items-center justify-center mx-auto h-auto relative flex-col w-[90vw] pt-1   md:w-[70vw]">
 
 
       <div className='w-[100%] md:w-3/4 flex row justify-between mx-auto items-center'>
-        <div className='text-left w-[50%] p-2'>
-          <p className=" text-textSecondary font-normal text-[1rem] py-1  flex justify-start gap-0  items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className='h-[.85rem] w-[.85rem]' viewBox="0 0 16 16">
+        <div className='text-left w-[60%] p-2'>
+          <p className=" text-textSecondary  text-[1rem] py-1  flex justify-start gap-[2px] font-normal items-center">
+            {weather.name}
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className='h-[.7rem] w-[.7rem]' viewBox="0 0 16 16">
               <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6" />
             </svg>
-            {weather.name}
 
           </p>
-          <h3 className="my-[0px] md:my-[3px] text-white font-medium text-[3rem] md:text-[5rem] ">
+          <h3 className="my-[0px] md:my-[3px] text-white font-medium text-[3.5rem] md:text-[5rem] ">
             {Math.trunc(weather.main.temp)}°
           </h3>
-          <p className='text-white text-[1rem] md:text-lg font-normal'>Feels  like {Math.trunc(weather.main.feels_like
-          )}°</p>
-          <p className=" text-textSecondary font-normal  text-[1rem] md:text-lg py-1">
-            {weather.weather[0].description}</p>
+          <p className=" text-white font-medium  text-[.9rem] md:text-lg py-1">
+            {weather.weather[0].description}
+          </p>
+          <p className='text-white text-[1rem] md:text-lg mt-2 py-1 font-medium'>
+            {Math.trunc(weather.main.temp_max)}° / {Math.trunc(weather.main.temp_min)}° Feels  like {Math.trunc(weather.main.feels_like)}°
+          </p>
 
         </div>
 
-        <div className='w-[50%]  p-2'>
-        <img src={getWeatherImage(weather.sys.sunrise, weather.sys.sunset)} alt="Weather" className='w-[100%] h-[100%] md:w-[300px]' />
+        <div className='w-[40%]  p-2'>
+          <img src={getWeatherImage(weather.sys.sunrise, weather.sys.sunset)} alt="Weather" className='w-[100%] h-[100%] md:w-[300px]' />
 
         </div>
 
