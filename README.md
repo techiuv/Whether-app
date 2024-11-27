@@ -26,6 +26,13 @@ A feature-rich weather application built using React, Tailwind CSS, and Vite. Th
 
 ## Previews
 
+<img src="public/previews/Preview(1).jpg" /> 
+
+<img src="public/previews/Preview(2).jpg" /> 
+<img src="public/previews/Preview(3).jpg" /> 
+
+<img src="public/previews/Preview(4).jpg" /> 
+
 ## Installation
 
 Follow these steps to set up the project locally:
