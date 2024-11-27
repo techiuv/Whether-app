@@ -15,9 +15,8 @@ A feature-rich weather application built using React, Tailwind CSS, and Vite. Th
 
 ## Tech Stack
 
-- **React**: For building the user interface.
-- **Tailwind CSS**: For styling and responsive design.
-- **Vite**: For faster builds and a better development experience.
+<img src="https://skillicons.dev/icons?i=react,vite,tailwind,vercel,&perline=7" />
+
 
 ## Usage
 
@@ -26,14 +25,26 @@ A feature-rich weather application built using React, Tailwind CSS, and Vite. Th
 3. Observe dynamic background changes based on the time of day (morning, day, evening, night).
 4. Enjoy the clean and responsive interface.
 
-## Previews
+## Preview
 
-<img src="public/previews/Preview(1).jpg" /> 
+<img src="public/previews/banner(1).jpg" />
 
-<img src="public/previews/Preview(2).jpg" /> 
-<img src="public/previews/Preview(3).jpg" /> 
+## Dynamic Themes based on time
 
-<img src="public/previews/Preview(4).jpg" /> 
+### Morning 
+<img src="public/previews/banner(2).jpg" />
+
+### Afternoon 
+
+<img src="public/previews/banner(4).jpg" />
+
+### Evening 
+
+<img src="public/previews/banner(3).jpg" />
+
+### Night
+
+<img src="public/previews/banner(5).jpg" />
 
 ## Installation
 
@@ -73,25 +84,20 @@ To deploy the app:
    npm run build
    ```
 
-2. Deploy the contents of the `dist` folder to your preferred hosting platform (e.g., Vercel, Netlify, GitHub Pages).
+2. Preview the Deployment
+   ```bash
+   npm run preview
+   ```
 
 ## API Integration
 
 This app uses a weather API to fetch real-time data. Configure your API key in the `.env` file:
 
+**Replace with your actual API key:**
 ```env
 VITE_OPEN_WEATHER_API=YOUR_API_KEY
 ```
 
-## Contributing
-
-Contributions are welcome! Please fork the repository and submit a pull request.
-
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
-
-## Acknowledgments
-
-- [OpenWeather API](https://openweathermap.org/) for providing weather data.
-- Tailwind CSS for its utility-first styling framework.
