@@ -33,11 +33,11 @@ const Dashboard = ({ city }) => {
     const currentTime = Math.floor(Date.now() / 1000);
 
     if (currentTime < sunrise || currentTime >= sunset) {
-      return '/src/assets/moon.svg'; // Night (moon)
+      return './assets/moon.png'; // Night (moon)
     } else if (currentTime >= sunrise && currentTime < sunrise + (sunset - sunrise) / 3) {
-      return '/src/assets/sun.svg'; // Morning
+      return './assets/sunrise.png'; // Morning
     } else {
-      return '/src/assets/sun.svg'; // Day
+      return './assets/sunrise.png'; // Day
     }
   };
 
