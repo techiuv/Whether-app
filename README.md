@@ -10,6 +10,8 @@ A feature-rich weather application built using React, Tailwind CSS, and Vite. Th
 - Dynamic weather icons and animations.
 - Responsive design for all devices.
 - Search functionality for weather data by city.
+- Saves the last fetched city's weather data for quicker access.
+
 
 ## Tech Stack
 
