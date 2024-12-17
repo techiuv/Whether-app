@@ -28,10 +28,10 @@ const Dashboard = ({ city }) => {
         gradient = 'linear-gradient(to bottom, #627294, #9fa7b0, #eeae5f, #c1614e)';
     } else if (currentTime >= afternoonStart && currentTime < eveningStart) {
         // Afternoon
-        gradient = 'linear-gradient(to bottom, #7bc1f0, #5a99dd)';
+        gradient = 'linear-gradient(to bottom, #5a99dd, #7bc1f0)';
     } else if (currentTime >= eveningStart && currentTime < sunset) {
         // Evening
-        gradient = 'linear-gradient(to bottom, #808cb6, #385b93)';
+        gradient = 'linear-gradient(to bottom, #385b93, #808cb6)';
     }
 
     document.body.style.background = gradient;
@@ -63,6 +63,7 @@ const Dashboard = ({ city }) => {
         );
         if (!weatherResponse.ok) {
           throw new Error('City not found');
+          
         }
         const weatherData = await weatherResponse.json();
         setWeather(weatherData);
